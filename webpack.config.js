@@ -12,14 +12,14 @@ module.exports = {
         loader: 'babel-loader',
         exclude: EXCLUDE,
         query: {
-          presets: ['react', 'es2015']
+          presets: ['react', 'stage-2', 'es2016', 'es2015']
         },
       },
       {
         test: /\.scss$/,
         loaders: ['style', 'css', 'sass'],
         exclude: EXCLUDE,
-      }      
+      }
     ]
   },
   watch: true
