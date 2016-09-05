@@ -1,9 +1,9 @@
 const EXCLUDE = /node_modules/;
 
 module.exports = {
-  entry: ["./index.js", "./index.scss"],
+  entry: ["./target/index.js", "./target/index.scss"],
   output: {
-    filename: "bundle.js"
+    filename: "dist/bundle.js"
   },
   module: {
     loaders: [
