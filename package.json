@@ -2,10 +2,10 @@
   "name": "airplane-mode",
   "version": "1.0.0",
   "description": "Airplane Mode for the Front End",
-  "main": "index.js",
+  "main": ".airplane-mode/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --inline"
+    "start": "webpack-dev-server --inline --config ./.airplane-mode/webpack.config.js"
   },
   "author": "chrisbolin",
   "license": "ISC",
