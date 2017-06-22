@@ -32,6 +32,9 @@ module.exports = {
         loaders: ['style', 'css', 'sass'],
         exclude,
       }
+    ],
+    noParse: [
+      /p5.js/
     ]
   },
   watch: true
