@@ -36,6 +36,5 @@ module.exports = {
     noParse: [
       /p5.js/
     ]
-  },
-  watch: true
+  }
 };

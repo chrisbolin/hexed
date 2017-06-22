@@ -5,7 +5,9 @@
   "main": ".airplane-mode/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --inline --config ./.airplane-mode/webpack.config.js"
+    "start": "webpack-dev-server --inline --config ./.airplane-mode/webpack.config.js --watch",
+    "build": "webpack --progress -p --config ./.airplane-mode/webpack.config.js",
+    "serve": "python -m SimpleHTTPServer"
   },
   "author": "chrisbolin",
   "license": "ISC",
