@@ -10,7 +10,7 @@ const entry = fs.readdirSync('.')
 module.exports = {
   entry,
   output: {
-    filename: ".airplane-mode/bundle.js"
+    filename: "dist/bundle.js"
   },
   module: {
     loaders: [
