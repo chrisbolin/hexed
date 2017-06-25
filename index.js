@@ -34,7 +34,7 @@ const program = ( p5 ) => {
     if (getHashId()) {
       p5.draw();
     } else {
-      drawRandomCode();
+      setHashId(getRandomRule());
     }
   }
 
@@ -190,11 +190,9 @@ const program = ( p5 ) => {
     return neighbors;
   };
 
-  const drawRandomCode = () => {
-    setHashId(p5.random([
-      105, 150, 182, 230, 198, 90, 106, 165, 45, 195, 99, 115, 7, 135, 71, 212, 97, 91, 75
-    ]));
-  };
+  const getRandomRule = () => p5.random([
+    105, 150, 182, 230, 198, 90, 106, 165, 45, 195, 99, 115, 7, 135, 71, 212, 97, 91, 75
+  ]);
 
   const initialize = () => {
     points = {};
@@ -224,14 +222,13 @@ const program = ( p5 ) => {
   };
 
   p5.mouseClicked = () => {
-    const direction = (p5.mouseX > 360) ? 1 : -1;
-    setHashId(getHashId(0) + direction);
+    setHashId(getRandomRule());
   }
 
   p5.keyPressed = () => {
     switch (p5.keyCode) {
       case 32: // space
-        drawRandomCode();
+        setHashId(getRandomRule());
         break;
       case 37: // left
         setHashId(getHashId() - 1);
