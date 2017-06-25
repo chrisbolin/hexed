@@ -30,12 +30,6 @@ const program = ( p5 ) => {
     p5.textAlign(CENTER);
     p5.frameRate(0.5);
     p5.noLoop();
-
-    if (getHashId()) {
-      p5.draw();
-    } else {
-      setHashId(getRandomRule());
-    }
   }
 
   const hexagon = (x, y, radius) => {
@@ -207,6 +201,12 @@ const program = ( p5 ) => {
   p5.draw = (direction=0) => {
     p5.clear();
     const currentCode = getHashId();
+
+    if (!currentCode) {
+      setHashId(getRandomRule());
+      return;
+    }
+
     const iterations = Math.round(
       Math.max(p5.windowWidth, p5.windowHeight * 1.2)/ config.size / config.pitch * 1.2
     );
