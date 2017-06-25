@@ -17,10 +17,7 @@ const program = ( p5 ) => {
   let ITERATIONS = Math.round(Math.max(p5.windowWidth, p5.windowHeight * 1.2)/ SIZE / PITCH * 1.2);
   let points = {};
   let forefront = {};
-  /*
-  !!! 150, 105
-  !! 165
-  */
+  let ruleArray;
 
   p5.setup = () => {
     p5.createCanvas(p5.windowWidth, p5.windowHeight);
@@ -55,8 +52,6 @@ const program = ( p5 ) => {
     .map(n => parseInt(n, 10)) // "1" => 1
     .reverse().slice(0, 8).reverse() // last(8)
   );
-
-  let valueMap = intToBinaryArray(126);
 
   // private
 
@@ -168,8 +163,8 @@ const program = ( p5 ) => {
 
   const calculateValue = (p) => {
     const ns = orderNeighbors(getNeighbors(p, 'OLD'));
-    const key = parseInt(ns.map(n => n.value).join(''), 2);
-    const value = valueMap[key];
+    const index = 7 - parseInt(ns.map(n => n.value).join(''), 2);
+    const value = ruleArray[index];
     return value;
   };
 
@@ -202,7 +197,7 @@ const program = ( p5 ) => {
 
   const drawRandomCode = () => {
     setHashId(p5.random([
-      150, 105, 165, 109, 90, 103, 99, 90, 86, 165, 180, 195, 198, 206, 224, 225, 226, 43, 134, 218, 210
+      105, 150, 182, 230, 198, 90, 106, 165, 45, 195, 99, 115, 7, 135, 71, 212, 97, 91, 75
     ]));
   };
 
@@ -222,7 +217,7 @@ const program = ( p5 ) => {
 
     if (!currentCode) return;
 
-    valueMap = intToBinaryArray(currentCode);
+    ruleArray = intToBinaryArray(currentCode);
     initialize();
     for (let i = 0; i < ITERATIONS; i++) {
       step();
