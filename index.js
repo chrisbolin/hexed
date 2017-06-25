@@ -12,12 +12,15 @@ const program = ( p5 ) => {
     CLOSE
   } = p5;
 
-  let SIZE = 14;
-  let PITCH = .84; // 1.00 circles touch, 0.84 hexes touch
-  let ITERATIONS = Math.round(Math.max(p5.windowWidth, p5.windowHeight * 1.2)/ SIZE / PITCH * 1.2);
   let points = {};
   let forefront = {};
   let ruleArray;
+
+  const config = {
+    printCoordinates: false,
+    size: 14,
+    pitch: .84,
+  };
 
   p5.setup = () => {
     p5.createCanvas(p5.windowWidth, p5.windowHeight);
@@ -58,8 +61,8 @@ const program = ( p5 ) => {
   const toXY = (a, b) => {
     const _a = a;
     const _b = b;
-    const x = ((_a * p5.sin(30) + _b)) * SIZE * PITCH + p5.windowWidth/2;
-    const y = (_a * p5.sin(60)) * SIZE * PITCH + p5.windowHeight/2;
+    const x = ((_a * p5.sin(30) + _b)) * config.size * config.pitch + p5.windowWidth/2;
+    const y = (_a * p5.sin(60)) * config.size * config.pitch + p5.windowHeight/2;
     return ({x, y});
   };
 
@@ -95,18 +98,18 @@ const program = ( p5 ) => {
 
   const paint = (p, value) => {
     if (value === 0) {
-      p5.fill(0, 0, 0, 0); // clear
+      p5.fill(0, 0, 0, 0); // transparent
     } else if (value === 1) {
       p5.fill(0, 0, 28); // dark
-    } else {
-      p5.fill(0, 0, 88); // grid
     }
     const { x, y } = toXY(p.a, p.b);
 
-    hexagon(x, y, SIZE/2); // ellipse(x, y, SIZE);
-    // if you'd like to paint the coordinates...
-    // p5.fill(0, 0, 100);
-    // text(p.key, x, y + 4);
+    hexagon(x, y, config.size / 2);
+    if (config.printCoordinates) {
+      p5.textSize(5);
+      p5.fill(0, 0, 100);
+      p5.text(p.key, x, y + 2);
+    }
   };
 
   const addToForefront = (p, value) => {
@@ -187,14 +190,6 @@ const program = ( p5 ) => {
     return neighbors;
   };
 
-  const grid = () => {
-    for (let a = -10; a < 10; a++) {
-      for (let b = -10; b < 10; b++) {
-        paint(toPoint(a, b));
-      }
-    }
-  };
-
   const drawRandomCode = () => {
     setHashId(p5.random([
       105, 150, 182, 230, 198, 90, 106, 165, 45, 195, 99, 115, 7, 135, 71, 212, 97, 91, 75
@@ -214,18 +209,18 @@ const program = ( p5 ) => {
   p5.draw = (direction=0) => {
     p5.clear();
     const currentCode = getHashId();
+    const iterations = Math.round(
+      Math.max(p5.windowWidth, p5.windowHeight * 1.2)/ config.size / config.pitch * 1.2
+    );
 
     if (!currentCode) return;
 
     ruleArray = intToBinaryArray(currentCode);
     initialize();
-    for (let i = 0; i < ITERATIONS; i++) {
+    for (let i = 0; i < iterations; i++) {
       step();
     }
-    // debug typing
     p5.fill(270, 0, 100);
-    // p5.textSize(45);
-    // p5.text(currentCode, 50, 50);
   };
 
   p5.mouseClicked = () => {
