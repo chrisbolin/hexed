@@ -1,6 +1,8 @@
-const getHashId = () => parseInt(location.hash.split('#')[1]);
-
-const setHashId = (hashId) => location.hash = hashId;
+import { getHashId, setHashId } from "./modules/browser.js";
+import { 
+  intToBinaryArray,
+  toPoint
+ } from "./modules/pure.js";
 
 const program = ( p5 ) => {
   const {
@@ -30,23 +32,24 @@ const program = ( p5 ) => {
     p5.noLoop();
   }
 
-  const hexagon = (x, y, radius) => {
-    var angle = 360 / 6;
-    p5.beginShape();
-    for (var a = angle/2; a < 360+angle/2; a += angle) {
-      var sx = x + p5.cos(a) * radius;
-      var sy = y + p5.sin(a) * radius;
-      p5.vertex(sx, sy);
+  function drawElement(x, y, shape) {
+    if (shape === 'circle') {
+      const radius = config.size * .8;
+      p5.circle(x, y, radius);
+    } else if (shape === 'hexagon') { 
+      const radius = config.size / 2;
+      var angle = 60;
+      p5.beginShape();
+      for (var a = angle / 2; a < 360 + (angle / 2); a += angle) {
+        var sx = x + p5.cos(a) * radius;
+        var sy = y + p5.sin(a) * radius;
+        p5.vertex(sx, sy);
+      }
+      p5.endShape(CLOSE);  
+    } else {
+      throw new Error(`shape "${shape}" not found.`)
     }
-    p5.endShape(CLOSE);
   }
-
-  const intToBinaryArray = (n) => (
-    ('00000000' + (n).toString(2)) // left-padded string
-    .split('')
-    .map(n => parseInt(n, 10)) // "1" => 1
-    .reverse().slice(0, 8).reverse() // last(8)
-  );
 
   // private
 
@@ -57,16 +60,6 @@ const program = ( p5 ) => {
     const y = (_a * p5.sin(60)) * config.size * config.pitch + p5.windowHeight/2;
     return ({x, y});
   };
-
-  const toKey = (a, b) => `${a},${b}`;
-
-  const toPoint = (a, b) => {
-    return {
-      a, b,
-      key: toKey(a, b)
-    };
-  };
-
 
   const getNeighbors = (p, filterMode) => {
     return ([
@@ -96,7 +89,8 @@ const program = ( p5 ) => {
     }
     const { x, y } = toXY(p.a, p.b);
 
-    hexagon(x, y, config.size / 2);
+    drawElement(x, y, 'hexagon');
+
     if (config.printCoordinates) {
       p5.textSize(5);
       p5.fill(0, 0, 100);
@@ -240,7 +234,6 @@ const program = ( p5 ) => {
   };
 
   window.onhashchange = () => p5.draw();
-  window.p5 = p5;
 };
 
 new p5(program);
