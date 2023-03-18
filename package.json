@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --inline --config ./.airplane-mode/webpack.config.js --watch",
     "build": "webpack --progress -p --config ./.airplane-mode/webpack.config.js",
-    "serve": "python -m SimpleHTTPServer"
+    "serve": "python3 -m http.server"
   },
   "author": "chrisbolin",
   "license": "ISC",
