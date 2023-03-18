@@ -1,5 +1,3 @@
-import P5 from "p5";
-
 const getHashId = () => parseInt(location.hash.split('#')[1]);
 
 const setHashId = (hashId) => location.hash = hashId;
@@ -245,4 +243,4 @@ const program = ( p5 ) => {
   window.p5 = p5;
 };
 
-new P5(program);
+new p5(program);

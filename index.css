@@ -1,16 +1,7 @@
 body {
-  background-color: #ff5871;
+  background-color: #ededed;
   color: white;
   padding: 0;
   margin: 0;
   font-family: "Helvetica Neue", "Helvetica", sans-serif;
-}
-
-h1 {
-  font-size: 50px;
-  font-weight: bold;
-}
-
-p {
-  font-size: 16px;
 }
