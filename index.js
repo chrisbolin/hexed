@@ -1,8 +1,14 @@
+import "https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js";
+
+import mountUI from "./modules/ui.js";
+
 import { getHashId, setHashId } from "./modules/browser.js";
 import { 
   intToBinaryArray,
   toPoint
  } from "./modules/pure.js";
+
+ mountUI();
 
 const program = ( p5 ) => {
   const {
@@ -212,10 +218,6 @@ const program = ( p5 ) => {
     }
     p5.fill(270, 0, 100);
   };
-
-  p5.mouseClicked = () => {
-    setHashId(getRandomRule());
-  }
 
   p5.keyPressed = () => {
     switch (p5.keyCode) {
